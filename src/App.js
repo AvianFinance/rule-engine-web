@@ -21,15 +21,15 @@ function App() {
           <Route
             exact
             path="/"
-            name="Survey Page"
+            name="LandingPage"
             render={(props) => <LandingPage {...props} />}
           />
           
-          <Redirect
+          {/* <Redirect
             to={{
               pathname: "/login",
             }}
-          />
+          /> */}
     </BrowserRouter>
   );
 }
