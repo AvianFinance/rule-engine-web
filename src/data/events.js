@@ -1,4 +1,4 @@
-export const events = {
+const events = {
     "INSNFTListed" : ["address indexed owner", "address indexed user", "address indexed nftContract", "uint256 tokenId", "uint256 pricePerDay"],
     "NFTINSPaid" : ["address indexed owner", "address indexed user", "address indexed nftContract", "uint256 tokenId", "uint64 expires", "uint64 insCount", "uint64 insIndex","uint256 insAmount", "uint256 totalPaid"],
     "NFTUnlisted" : ["address indexed unlistSender", "address indexed nftContract", "uint256 indexed tokenId"],
@@ -7,3 +7,5 @@ export const events = {
     "ItemCanceled" : ["address indexed seller","address indexed nftAddress","uint256 indexed tokenId"],
     "ItemBought" : ["address indexed buyer","address indexed nftAddress","uint256 indexed tokenId","uint256 price"]
 }
+
+export default events;

@@ -1,4 +1,4 @@
-export const errors = {
+const errorsList = {
     "1" : "PriceNotMet(address nftAddress, uint256 tokenId, uint256 price)",
     "2" : "ItemNotForSale(address nftAddress, uint256 tokenId)",
     "3" : "NotListed(address nftAddress, uint256 tokenId)",
@@ -8,3 +8,5 @@ export const errors = {
     "7" : "NotApprovedForMarketplace()",
     "8" : "PriceMustBeAboveZero()"
 }
+
+export default errorsList;

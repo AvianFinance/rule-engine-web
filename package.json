@@ -22,6 +22,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@wagmi/chains": "^0.3.1",
     "axios": "^0.26.0",
     "bootstrap": "^5.2.2",
     "child_process": "^1.0.2",
@@ -41,6 +42,7 @@
     "react-spinners": "^0.13.6",
     "react-toastify": "^8.2.0",
     "redux": "4.1.2",
+    "wagmi": "^0.11.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

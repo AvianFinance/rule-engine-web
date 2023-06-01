@@ -1,4 +1,4 @@
-export const modifiers = {
+const modifiers = {
     "notIListed" : ["(address nftAddress, uint256 tokenId) {","Listing_installment memory listing = i_listings[nftAddress][tokenId];","if (listing.pricePerDay > 0) {","    revert AlreadyListed(nftAddress, tokenId);","}","_;"],
     "isIListed" : ["(address nftAddress, uint256 tokenId) {","Listing_installment memory listing = i_listings[nftAddress][tokenId];","if (listing.pricePerDay <= 0) {","    revert NotListed(nftAddress, tokenId);","}","_;"],
     "isOwner" : ["(address nftAddress,uint256 tokenId,address spender) {","IERC721 nft = IERC721(nftAddress);","address owner = nft.ownerOf(tokenId);","if (spender != owner) {","  revert NotOwner();","}","_;"],
@@ -7,3 +7,5 @@ export const modifiers = {
     "notSListed" : ["(address nftAddress, uint256 tokenId) {","Listing_sell memory listing = s_listings[nftAddress][tokenId];","if (listing.price > 0) {"," revert AlreadyListed(nftAddress, tokenId);","}","_;"],
     "isSListed" : ["(address nftAddress, uint256 tokenId) {","Listing_sell memory listing = s_listings[nftAddress][tokenId];","if (listing.price <= 0) {"," revert NotListed(nftAddress, tokenId);","}","_;"]
 }
+
+export default modifiers;
