@@ -15,6 +15,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import fetch from 'node-fetch';
+
 import {
 	useSigner,
 	useAccount,
@@ -148,9 +150,48 @@ const BuySell = () => {
         });
     }
     
-    const Deploy = (address) => {
+    const Deploy = async (address) => {
         if(isConnected){
-            console.log("deployingg")
+            fetch('http://127.0.0.1:5000/deploy/ins', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Include any other headers as needed
+                },
+                body: JSON.stringify({ eventsList: eventsList, errorsList: errorsList, modifiersList: modifiersList }) // Include the request body data
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response data
+                    console.log(data);
+                    setsmartcontractadd(data.data)
+                    
+                    setChecked(true)
+                    toast.success('Compaire the Smart Contracts and then Deploy', {
+                        position: "top-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+                })
+                .catch(error => {
+                    // Handle any errors
+                    console.error('Error:', error);
+                    toast.error('Error occured while creating the new smart contract. Try Again!', {
+                        position: "top-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+            });
             toast.success('Deploying Successfull', {
                 position: "top-left",
                 autoClose: 5000,

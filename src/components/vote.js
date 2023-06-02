@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -48,6 +48,22 @@ export default function VotingTable() {
         console.log("handlevote",address)
         setOpen(true)
     }
+    const [contracts, setContracts] = React.useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:5000/upgraded_contracts')
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data
+                console.log(data.data);
+                setContracts(data.data)
+            })
+            .catch(error => {
+                // Handle any errors
+                console.error('Error:', error);
+            });
+    }, [])
+
     const { address, connector, isConnected } = useAccount()
     const handleupgrade = (address) => {
         if(isConnected){
