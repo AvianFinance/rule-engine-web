@@ -35,7 +35,6 @@ const style = {
   };
 
 export default function VotingTable() {
-    const history = useHistory();
     const [open, setOpen] = React.useState(false);
     const handlevote = (address) => {
         console.log("handlevote",address)
@@ -52,40 +51,47 @@ export default function VotingTable() {
     let ins_marketplace
 
     const handleVotes = async () => {
-        let sell_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
+        sell_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
             sell_token,
             SellProxy.abi,
             signer
         );
-        let rent_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
+        rent_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
             rent_token,
             RentProxy.abi,
             signer
         );
-        let ins_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
+        ins_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
             ins_token,
             InsProxy.abi,
             signer
         );
-        // let sellvotes  = await sell_marketplace.calculateVotingResult()
-        // let rentvotes  = await rent_marketplace.calculateVotingResult()
-        // let insvotes  = await ins_marketplace.calculateVotingResult()
-        // if (sellvotes!==null){
-        //     sellvotes = 1
-        // } else {
-        //     sellvotes = null
-        // }
-        // if (rentvotes!==null){
-        //     rentvotes = 1
-        // } else {
-        //     rentvotes = null
-        // }
-        // if (insvotes!==null){
-        //     insvotes = 1
-        // } else {
-        //     insvotes = null
-        // }
-        setnumofVotes({sell: 1, rent: 1, ins: 1})
+        console.log(sell_marketplace)
+        console.log(rent_marketplace)
+        console.log(ins_marketplace)
+        let sellvotes  = await sell_marketplace.calculateVotingResult()
+        console.log(sellvotes)
+        let rentvotes  = await rent_marketplace.calculateVotingResult()
+        console.log(rentvotes)
+        let insvotes  = await ins_marketplace.calculateVotingResult()
+        console.log(insvotes)
+        if (sellvotes===null){
+            sellvotes = null
+        } else {
+            sellvotes = parseInt((sellvotes._hex), 16)
+        }
+        if (rentvotes===null){
+            rentvotes = null
+        } else {
+            rentvotes = parseInt((rentvotes._hex), 16)
+        }
+        if (insvotes===null){
+            insvotes = null
+        } else {
+            insvotes = parseInt((insvotes._hex), 16)
+        }
+        console.log({sell: sellvotes, rent: rentvotes, ins: insvotes})
+        setnumofVotes({sell: sellvotes, rent: rentvotes, ins: insvotes})
     }
 
     useEffect(() => {
@@ -172,13 +178,13 @@ export default function VotingTable() {
             console.log("voteinfavour")
             try {
                 let _marketplace
-                if(status == "sell"){
+                if(status === "sell"){
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         sell_token,
                         SellProxy.abi,
                         signer
                     );
-                } else if(status == "rent"){
+                } else if(status === "rent"){
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         rent_token,
                         RentProxy.abi,
@@ -234,13 +240,13 @@ export default function VotingTable() {
         if(isConnected){
             try {
                 let _marketplace
-                if(status == "sell"){
+                if(status === "sell"){
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         sell_token,
                         SellProxy.abi,
                         signer
                     );
-                } else if(status == "rent"){
+                } else if(status === "rent"){
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         rent_token,
                         RentProxy.abi,
