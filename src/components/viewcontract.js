@@ -7,6 +7,7 @@ const ViewCOntract = () => {
     console.log(address)
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', height: '100vh' }}>          
+            <h1>Upgraded Contract</h1>
             <iframe 
                 style={{
                     width: "80%",

@@ -21,6 +21,7 @@ import { useSigner, useAccount } from 'wagmi';
 import  SellProxy  from '../contracts/ASEProxy/ASE_Proxy.json';
 import { ethers } from "ethers";
 import { useHistory } from "react-router-dom";
+import sell_token from "../config.js"
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -65,6 +66,7 @@ const BuySell = () => {
     };
     const history = useHistory();
     const { data: signer } = useSigner()
+    console.log(signer)
     const [errorsList, seterrorsList] = React.useState([]);
     const [eventsList, seteventsList] = React.useState([]);
     const [modifiersList, setmodifiersList] = React.useState([]);
@@ -75,7 +77,7 @@ const BuySell = () => {
     const [bodyvalues, setbodyvalues] = React.useState()
     const [isloading, setisloading] = React.useState(false)
     const _marketplace = new ethers.Contract( // We will use this to interact with the AuctionManager
-        '0x37B09962508278F52e76704680F7476a2F9eB7C4',
+        sell_token,
         SellProxy.abi,
         signer
     );
@@ -266,9 +268,13 @@ const BuySell = () => {
     }
 
     if(isloading){
-        return(<Box sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center', width: '100vw', height: '100vh' }}>
-            <CircularProgress />
-        </Box>)
+        return(
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', height: '100vh' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                <CircularProgress />
+            </Box>
+        </div>
+        )
     } else {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', height: '100vh' }}>
