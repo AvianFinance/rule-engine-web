@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 
 // Toaster
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { avalanche, avalancheFuji } from '@wagmi/chains'
@@ -59,7 +57,7 @@ function App() {
                 />
                 <Route
                   exact
-                  path="/viewcontract/:id"
+                  path="/viewcontract/:address"
                   name="viewcontract"
                   render={(props) => <ViewCOntract {...props} />}
                 />

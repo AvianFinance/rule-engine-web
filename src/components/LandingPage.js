@@ -1,15 +1,13 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const LandingPage = () => {
   const history = useHistory();
 
   const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -21,11 +19,6 @@ const LandingPage = () => {
     cursor: 'pointer',
     justifyContent: 'center',
   }));
-
-  const handleClick = (page) => {
-    console.log('clicked');
-    history.push(`/${page}`)
-  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>

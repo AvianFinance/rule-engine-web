@@ -1,22 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 // import { useRouter } from 'next/router';
 // import { useMetaMask } from 'metamask-react';
-import { useDispatch } from 'react-redux';
 // import { walletModalShow } from '../../redux/counterSlice';
 import Button from '@mui/material/Button';
 
-import { ethers } from "ethers";
 import {
-	useSigner,
 	useAccount,
 	useConnect,
 	useDisconnect,
 } from 'wagmi'
-import { useSelector } from 'react-redux';
 
 const Metamask_comp_text = () => {
-	const { address, isConnected } = useAccount()
-	const { connect, connectors, error, isLoading, pendingConnector } =
+	const { isConnected } = useAccount()
+	const { connect, connectors } =
 		useConnect()
 	const { disconnect } = useDisconnect()
 
@@ -59,8 +55,8 @@ const Metamask_comp_text = () => {
 };
 
 const Metamask_comp_icon = ({ prop }) => {
-	const { address, isConnected } = useAccount()
-	const { connect, connectors, error, isLoading, pendingConnector } =
+	const {  isConnected } = useAccount()
+	const { connect, connectors } =
 		useConnect()
 	const { disconnect } = useDisconnect()
 
