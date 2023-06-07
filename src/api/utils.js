@@ -1,5 +1,9 @@
 import axios from "./axios";
 
+const headers = {
+	'Content-Type': 'application/json'
+}
+
 // Utility functions
 export const getRequest = async (uri) => {
 	try {
@@ -19,7 +23,9 @@ export const getRequest = async (uri) => {
 
 export const postRequest = async (uri, data) => {
 	try {
-		let response = await axios.post(uri, data);
+		let response = await axios.post(uri, data, {
+			headers: headers
+		});
 
 		return {
 			data: response.data,
