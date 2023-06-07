@@ -76,11 +76,7 @@ const BuySell = () => {
     const { isConnected } = useAccount()
     const [bodyvalues, setbodyvalues] = React.useState()
     const [isloading, setisloading] = React.useState(false)
-    const _marketplace = new ethers.Contract( // We will use this to interact with the AuctionManager
-        sell_token,
-        SellProxy.abi,
-        signer
-    );
+    console.log(sell_token)
 
     useEffect(() => {
         setisloading(true)
@@ -151,39 +147,47 @@ const BuySell = () => {
                     console.log(res)
                     if (res.data) {
                         setsmartcontractadd(res.data)
-                        setChecked(true)
                         console.log(res)
                         let adreessval = res.data.contract_addr
                         console.log(adreessval)
                         try {
-                            await _marketplace.createVotingProposal(adreessval);
-                            deployedContract(adreessval)
-                                .then((res) => {
-                                    if (res.data){
-                                        toast.success('Deployed! Compaire the Smart Contracts and then Deploy', {
-                                            position: "top-left",
-                                            autoClose: 5000,
-                                            hideProgressBar: false,
-                                            closeOnClick: true,
-                                            pauseOnHover: true,
-                                            draggable: true,
-                                            progress: undefined,
-                                            theme: "light",
+                            const _marketplace = new ethers.Contract( // We will use this to interact with the AuctionManager
+                                "0xf17339008A3D13B5E032Cd1FDf95069A02760E84",
+                                SellProxy.abi,
+                                signer
+                            );
+                            let transaction = await _marketplace.createVotingProposal(adreessval);
+                            console.log(transaction)
+                            if(transaction){
+                                await deployedContract(adreessval)
+                                    .then((res) => {
+                                        if (res.data){
+                                            toast.success('Deployed! Compaire the Smart Contracts and then Deploy', {
+                                                position: "top-left",
+                                                autoClose: 5000,
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: true,
+                                                draggable: true,
+                                                progress: undefined,
+                                                theme: "light",
+                                                });
+                                            history.push(`/vote`)
+                                        } else {
+                                            toast.error('Error occured while creating the new smart contract. Try Again!', {
+                                                position: "top-left",
+                                                autoClose: 5000,
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: true,
+                                                draggable: true,
+                                                progress: undefined,
+                                                theme: "light",
                                             });
-                                        history.push(`/vote`)
-                                    } else {
-                                        toast.error('Error occured while creating the new smart contract. Try Again!', {
-                                            position: "top-left",
-                                            autoClose: 5000,
-                                            hideProgressBar: false,
-                                            closeOnClick: true,
-                                            pauseOnHover: true,
-                                            draggable: true,
-                                            progress: undefined,
-                                            theme: "light",
-                                        });
-                                    }
-                                })
+                                        }
+                                    })
+                            }
+                            
                         } catch (error) {
                             toast.error(error.reason, {
                                 position: "top-left",
@@ -196,7 +200,7 @@ const BuySell = () => {
                                 theme: "light",
                                 });
                         }
-                        
+                        setChecked(true)
                     } else {
                         toast.error('Error occured while creating the new smart contract. Try Again!', {
                             position: "top-left",

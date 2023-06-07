@@ -47,7 +47,7 @@ function App() {
     <WagmiConfig client={client} suppressHydrationWarning="true">
           <BrowserRouter>
           <React.Suspense fallback={loading}>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar position="sticky"/>
             <Switch>         
                 <Route
                   exact

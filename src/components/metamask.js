@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { useRouter } from 'next/router';
 // import { useMetaMask } from 'metamask-react';
 // import { walletModalShow } from '../../redux/counterSlice';
@@ -11,10 +11,14 @@ import {
 } from 'wagmi'
 
 const Metamask_comp_text = () => {
-	const { isConnected } = useAccount()
+	const { isConnected , isConnecting, isDisconnected} = useAccount()
 	const { connect, connectors } =
 		useConnect()
 	const { disconnect } = useDisconnect()
+	
+	useEffect(() => {
+		console.log(isConnected)
+	}, [isConnected, isConnecting, isDisconnected])
 
 	if (isConnected) {
 		return (
@@ -26,7 +30,7 @@ const Metamask_comp_text = () => {
 			>
 				Disconnect
 			</Button> )
-	  }
+	}
 
 	if (!isConnected) {
 		return ( 

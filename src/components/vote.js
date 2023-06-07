@@ -36,62 +36,66 @@ const style = {
 
 export default function VotingTable() {
     const [open, setOpen] = React.useState(false);
-    const handlevote = (address) => {
-        console.log("handlevote",address)
-        setOpen(true)
-    }
     const { data: signer } = useSigner()
     const [isloading, setisloading] = React.useState(false);
     const [numofVotes, setnumofVotes] = React.useState(null);
-
+    const [selected, setselected] = React.useState(null);
     const [contracts, setContracts] = React.useState([]);
+    console.log(sell_token)
 
-    let sell_marketplace
-    let rent_marketplace
-    let ins_marketplace
+    // let sell_marketplace
+    // let rent_marketplace
+    // let ins_marketplace
 
     const handleVotes = async () => {
-        sell_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-            sell_token,
-            SellProxy.abi,
-            signer
-        );
-        rent_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-            rent_token,
-            RentProxy.abi,
-            signer
-        );
-        ins_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-            ins_token,
-            InsProxy.abi,
-            signer
-        );
-        console.log(sell_marketplace)
-        console.log(rent_marketplace)
-        console.log(ins_marketplace)
-        let sellvotes  = await sell_marketplace.calculateVotingResult()
-        console.log(sellvotes)
-        let rentvotes  = await rent_marketplace.calculateVotingResult()
-        console.log(rentvotes)
-        let insvotes  = await ins_marketplace.calculateVotingResult()
-        console.log(insvotes)
-        if (sellvotes===null){
-            sellvotes = null
-        } else {
-            sellvotes = parseInt((sellvotes._hex), 16)
-        }
-        if (rentvotes===null){
-            rentvotes = null
-        } else {
-            rentvotes = parseInt((rentvotes._hex), 16)
-        }
-        if (insvotes===null){
-            insvotes = null
-        } else {
-            insvotes = parseInt((insvotes._hex), 16)
-        }
-        console.log({sell: sellvotes, rent: rentvotes, ins: insvotes})
-        setnumofVotes({sell: sellvotes, rent: rentvotes, ins: insvotes})
+        // sell_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
+        //     sell_token,
+        //     SellProxy.abi,
+        //     signer
+        // );
+        // rent_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
+        //     rent_token,
+        //     RentProxy.abi,
+        //     signer
+        // );
+        // ins_marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
+        //     ins_token,
+        //     InsProxy.abi,
+        //     signer
+        // );
+        // console.log(sell_marketplace)
+        // console.log(rent_marketplace)
+        // console.log(ins_marketplace)
+        // let sellvotes  = await sell_marketplace.calculateVotingResult()
+        // console.log(sellvotes)
+        // let rentvotes  = await rent_marketplace.calculateVotingResult()
+        // console.log(rentvotes)
+        // let insvotes  = await ins_marketplace.calculateVotingResult()
+        // console.log(insvotes)
+        // if (sellvotes===null){
+        //     sellvotes = null
+        // } else {
+        //     sellvotes = parseInt((sellvotes._hex), 16)
+        // }
+        // if (rentvotes===null){
+        //     rentvotes = null
+        // } else {
+        //     rentvotes = parseInt((rentvotes._hex), 16)
+        // }
+        // if (insvotes===null){
+        //     insvotes = null
+        // } else {
+        //     insvotes = parseInt((insvotes._hex), 16)
+        // }
+        // console.log({sell: sellvotes, rent: rentvotes, ins: insvotes})
+        // setnumofVotes({sell: sellvotes, rent: rentvotes, ins: insvotes})
+        setnumofVotes({sell: 1, rent: 1, ins: 1})
+    }
+
+    const handlevote = (type) => {
+        console.log("handlevote")
+        setOpen(true)
+        setselected(type)
     }
 
     useEffect(() => {
@@ -102,17 +106,6 @@ export default function VotingTable() {
                     }
                     handleVotes()
 				})
-        // fetch('http://127.0.0.1:5000/upgraded_contracts')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Handle the response data
-        //         console.log(data.data);
-        //         setContracts(data.data)
-        //     })
-        //     .catch(error => {
-        //         // Handle any errors
-        //         console.error('Error:', error);
-        //     });
     }, [])
 
     const { isConnected } = useAccount()
@@ -121,22 +114,25 @@ export default function VotingTable() {
         if(isConnected){
             try {
                 let _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-                    '0xf45BE31c4ba4E71D027864F93282C782E2edcFF1',
+                    '0xf17339008A3D13B5E032Cd1FDf95069A02760E84',
                     SellProxy.abi,
                     signer
                 );
                 console.log('marketplace',_marketplace)
-                await _marketplace.updateImplContract();
-                toast.success('Successfully Updated', {
-                    position: "top-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    });
+                let transaction = await _marketplace.updateImplContract();
+                console.log('transaction',transaction)
+                if(transaction){
+                    toast.success('Successfully Updated', {
+                        position: "top-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+                }
             } catch (error) {
                 toast.error(error.reason, {
                     position: "top-left",
@@ -172,25 +168,30 @@ export default function VotingTable() {
         window.open(`/viewcontract/${val[val.length - 1]}`, '_blank');
     }
 
-    const voteinfavour = async (status) => {
+    const voteinfavour = async () => {
         setisloading(true)
+        setOpen(false)
         if(isConnected){
             console.log("voteinfavour")
             try {
                 let _marketplace
-                if(status === "sell"){
+                if(selected === "sell"){
+                    console.log("came to sell")
+                    console.log("came to sell")
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-                        sell_token,
+                        "0xf17339008A3D13B5E032Cd1FDf95069A02760E84",
                         SellProxy.abi,
                         signer
                     );
-                } else if(status === "rent"){
+                } else if(selected === "rent"){
+                    console.log("came to rent")
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         rent_token,
                         RentProxy.abi,
                         signer
                     );
                 } else{
+                    console.log("came to ins")
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         ins_token,
                         InsProxy.abi,
@@ -199,16 +200,18 @@ export default function VotingTable() {
                 }
                 let transaction = await _marketplace.voteOnProposal(true);
                 console.log('transaction',transaction)
-                toast.success('Voting Successfull', {
-                    position: "top-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    });
+                if(transaction){
+                    toast.success('Voting Successfull', {
+                        position: "top-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+                    }
             } catch (error) {
                 toast.error(error.reason, {
                     position: "top-left",
@@ -236,17 +239,19 @@ export default function VotingTable() {
         setisloading(false)
     }
     const voteagainst = async (status) => {
+        setOpen(false)
         setisloading(true)
         if(isConnected){
             try {
                 let _marketplace
-                if(status === "sell"){
+                if(selected === "sell"){
+                    console.log("came to sell")
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-                        sell_token,
+                        "0xf17339008A3D13B5E032Cd1FDf95069A02760E84",
                         SellProxy.abi,
                         signer
                     );
-                } else if(status === "rent"){
+                } else if(selected === "rent"){
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
                         rent_token,
                         RentProxy.abi,
@@ -259,17 +264,20 @@ export default function VotingTable() {
                         signer
                     );
                 }
-                await _marketplace.voteOnProposal(false);
-                toast.success('Voting Successfull', {
-                    position: "top-left",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    });
+                let transaction = await _marketplace.voteOnProposal(false);
+                console.log('transaction',transaction)
+                if(transaction){
+                    toast.success('Voting Successfull', {
+                        position: "top-left",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
+                    }
             } catch (error) {
                 toast.error(error.reason, {
                     position: "top-left",
@@ -365,10 +373,10 @@ export default function VotingTable() {
                             {row.contract_name === "ins" ? <TableCell align="center">{row.status==="pending" && numofVotes!==null ? numofVotes.ins : "-"}</TableCell> : null}
                             <TableCell align="center">
                                 <Stack direction="row" sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}} spacing={3}>
-                                    <Button disabled={row.status!=="pending"} variant="outlined" color="primary" onClick={()=>handlevote(row.status)}>
+                                    <Button disabled={row.status!=="pending"} variant="outlined" color="primary" onClick={()=>handlevote(row.contract_name)}>
                                         Vote
                                     </Button>
-                                    <Button disabled={row.status!=="pending"} variant="outlined" color="secondary" onClick={()=>handleupgrade(row.status)}>
+                                    <Button disabled={row.status!=="pending"} variant="outlined" color="secondary" onClick={()=>handleupgrade(row.contract_name)}>
                                         Upgrade
                                     </Button>
                                     <Button variant="outlined" color="success" onClick={()=>handleview(row.address)}>

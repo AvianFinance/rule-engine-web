@@ -21,7 +21,7 @@ const LandingPage = () => {
   }));
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <h1 style={{ textAlign: 'center', marginBottom: '50px' }}>Select the Contract Type</h1>
       <Grid container spacing={2} style={{width: '50%'}}>
         <Grid item xs={12} md={4}>
