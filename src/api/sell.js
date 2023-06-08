@@ -15,3 +15,5 @@ export const deployContract = (contract_type,data) => postRequest(`/deploy/${con
 export const getFunction = (contract_type,function_name) => getRequest(`/fetch_function/${contract_type}/${function_name}`);
 
 export const deployedContract = (address) => getRequest(`/created_proposal/${address}`);
+
+export const lattestContrat = (contract_type) => getRequest(`/lattestcontract/${contract_type}`);

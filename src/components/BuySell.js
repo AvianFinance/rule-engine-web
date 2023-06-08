@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Functiondetails from './functions.js';
-import { getBasicData, checkFunction, deployContract, deployedContract } from '../api/sell.js';
+import { getBasicData, checkFunction, deployContract, deployedContract, lattestContrat } from '../api/sell.js';
 import { useSigner, useAccount } from 'wagmi';
 import  SellProxy  from '../contracts/ASEProxy/ASE_Proxy.json';
 import { ethers } from "ethers";
@@ -76,10 +76,15 @@ const BuySell = () => {
     const { isConnected } = useAccount()
     const [bodyvalues, setbodyvalues] = React.useState()
     const [isloading, setisloading] = React.useState(false)
-    console.log(sell_token)
+    const [lattestContratval, setlattestContrat] = React.useState(null)
 
     useEffect(() => {
         setisloading(true)
+        lattestContrat('sell')
+            .then((res) => {
+                console.log(res.data.data[0])
+                setlattestContrat(res.data.data[0])
+            })
         getBasicData('sell')
 				.then((res) => {
                     if(res.data) {
@@ -296,6 +301,11 @@ const BuySell = () => {
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={12} >
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignContent: 'center' }}>
+                            <h1>Buy Sell Contract</h1>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} md={12} >
                         <div>
                             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
@@ -334,7 +344,9 @@ const BuySell = () => {
                                 <AccordionDetails style={{display: 'flex', flexDirection:'row', justifyContent:'center', alignContent: 'center'}}>
                                     <FormGroup>
                                         {modifiersList.map((modifier, id) => {
-                                            return(<FormControlLabel onClick={() => handleModifiers(id, modifier[0], modifier[1], modifier[2])} key={id} control={<Checkbox checked={Boolean(modifier[2])}/>} label={modifier[0] + " - " + modifier[1]} />)
+                                            if(modifier[0]!=='non-reentrant'){
+                                                return(<FormControlLabel onClick={() => handleModifiers(id, modifier[0], modifier[1], modifier[2])} key={id} control={<Checkbox checked={Boolean(modifier[2])}/>} label={modifier[0] + " - " + modifier[1]} />)
+                                            }
                                         })}
                                         {/* <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
                                         <FormControlLabel required control={<Checkbox />} label="Required" />
@@ -355,6 +367,9 @@ const BuySell = () => {
                     <Grid item xs={12} md={12}>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent:'center'}}>
                         <Stack direction="row" sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}} spacing={3}>
+                                <Button variant="outlined" color="secondary" href={lattestContratval ? lattestContratval.address : null} target='blank'>
+                                    View Contract
+                                </Button>
                                 <Button variant="outlined" color="primary" onClick={()=>Check()} >
                                     Check
                                 </Button>
@@ -378,7 +393,7 @@ const BuySell = () => {
                                     border: '2px solid black'
                                 }} 
                                 title = "Current Contract"
-                                src={smartcontractadd ? smartcontractadd.ipfs : "https://res.cloudinary.com/isuruieee/raw/upload/v1685011682/sell_logic_itauje.txt"}>
+                                src={lattestContratval ? lattestContratval.address : "https://res.cloudinary.com/isuruieee/raw/upload/v1685011682/sell_logic_itauje.txt"}>
                             </iframe> 
                             {/* <p>hii</p> */}
                         </Grid>
