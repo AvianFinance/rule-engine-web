@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import AnimatedImage from './AnimatedImage.js';
 import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -286,7 +286,7 @@ const BuySell = () => {
         return(
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', height: '100vh' }}>
             <Box sx={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
-                <CircularProgress />
+                <AnimatedImage />
             </Box>
         </div>
         )

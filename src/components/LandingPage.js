@@ -3,6 +3,7 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { useHistory } from "react-router-dom";
+import '../components/css/AnimatedLanding.css';
 
 const LandingPage = () => {
   const history = useHistory();
@@ -21,8 +22,8 @@ const LandingPage = () => {
   }));
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '50px' }}>Select the Contract Type</h1>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} className="animated-image">
+      <h1 style={{ textAlign: 'center', marginBottom: '50px', marginTop: '150px' }}>Select the Contract Type</h1>
       <Grid container spacing={2} style={{width: '50%'}}>
         <Grid item xs={12} md={4}>
           <Item onClick={() => history.push("buy&sell")}><h1>Buy/Sell Smart Contract</h1></Item>
