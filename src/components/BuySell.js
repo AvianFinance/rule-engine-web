@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Functiondetails from './functions.js';
-import { getBasicData, checkFunction, deployContract, deployedContract, lattestContrat } from '../api/sell.js';
+import { getBasicData, checkFunction, deployContract, deployedContract, lattestContrat } from '../api/contractsdata.js';
 import { useSigner, useAccount } from 'wagmi';
 import  SellProxy  from '../contracts/ASEProxy/ASE_Proxy.json';
 import { ethers } from "ethers";
@@ -82,8 +82,11 @@ const BuySell = () => {
         setisloading(true)
         lattestContrat('sell')
             .then((res) => {
-                console.log(res.data.data[0])
-                setlattestContrat(res.data.data[0])
+                if (res.data){
+                    console.log(res.data.data[0])
+                    setlattestContrat(res.data.data[0])
+                }
+                
             })
         getBasicData('sell')
 				.then((res) => {
@@ -118,7 +121,7 @@ const BuySell = () => {
                 if(res.data){
                     setsmartcontractadd({ipfs:res.data,contract_addr:""})
                     setChecked(true)
-                    toast.success('Compaire the Smart Contracts and then Deploy', {
+                    toast.success('Compare the Smart Contracts and then Deploy', {
                         position: "top-left",
                         autoClose: 5000,
                         hideProgressBar: false,
@@ -139,6 +142,7 @@ const BuySell = () => {
                         progress: undefined,
                         theme: "light",
                     });
+                    setChecked(false)
                 }
             })
         setisloading(false)
@@ -167,7 +171,7 @@ const BuySell = () => {
                                 await deployedContract(adreessval)
                                     .then((res) => {
                                         if (res.data){
-                                            toast.success('Deployed! Compaire the Smart Contracts and then Deploy', {
+                                            toast.success('Deployed! Compare the Smart Contracts and then Deploy', {
                                                 position: "top-left",
                                                 autoClose: 5000,
                                                 hideProgressBar: false,
@@ -217,6 +221,7 @@ const BuySell = () => {
                             progress: undefined,
                             theme: "light",
                         });
+                        setChecked(false)
                     }
 				})
         } else {
@@ -230,6 +235,7 @@ const BuySell = () => {
                 progress: undefined,
                 theme: "light",
             });
+            setChecked(false)
         }   
         setisloading(false)
     }
@@ -275,7 +281,7 @@ const BuySell = () => {
         setmodifiersList(previouslist);
         setrefresh(!refresh)
     }
-
+    console.log(smartcontractadd)
     if(isloading){
         return(
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px', height: '100vh' }}>
@@ -379,7 +385,7 @@ const BuySell = () => {
                             </Stack>
                         </div>
                     </Grid>
-                    {testchecked ? 
+                    {testchecked && smartcontractadd? 
                     <>
                         <Grid item xs={12} md={6}>
                             <h1>Current Contract</h1>
@@ -393,7 +399,7 @@ const BuySell = () => {
                                     border: '2px solid black'
                                 }} 
                                 title = "Current Contract"
-                                src={lattestContratval ? lattestContratval.address : "https://res.cloudinary.com/isuruieee/raw/upload/v1685011682/sell_logic_itauje.txt"}>
+                                src={lattestContratval ? lattestContratval.address : "https://jade-witty-wolverine-528.mypinata.cloud/ipfs/QmYQQEjJvKMHzDxzpM2yZ9em6R8oxGewpb3DREr9qwPnDt?pinataGatewayToken=xA9loW9mwlHFcUpNy4slXCUcWXNb-o8w5UN3T8pDiJRXLEh2zw4NoFeijQv9m5kK&_gl=1*u1cr9n*rs_ga*MTAxNjE0NTAyLjE2ODYwNjg1NTc.*rs_ga_5RMPXG14TE*MTY4Njg0OTM4MC4xMy4xLjE2ODY4NDk4ODAuMTMuMC4w"}>
                             </iframe> 
                             {/* <p>hii</p> */}
                         </Grid>
@@ -409,7 +415,7 @@ const BuySell = () => {
                                     border: '2px solid black'
                                 }}
                                 title = "Updated Contract"
-                                src= {smartcontractadd ? smartcontractadd.ipfs : "https://res.cloudinary.com/isuruieee/raw/upload/v1685011682/sell_logic_itauje.txt"}>
+                                src= {smartcontractadd.ipfs}>
                             </iframe> 
                             {/* <p>hii</p> */}
                         </Grid>

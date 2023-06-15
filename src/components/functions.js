@@ -5,7 +5,7 @@ import Step from '@mui/material/Step';
 import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getFunctiondetails, getFunction } from '../api/sell.js';
+import { getFunctiondetails, getFunction } from '../api/contractsdata.js';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -39,7 +39,9 @@ const Functiondetails = ({contract_type, bodyvalues, setbodyvalues}) => {
     if(step===0){
       getFunctiondetails(contract_type)
         .then((res) => {
+          if(res.data){
             setfunctionList(res.data.data)
+          }
         })
     }
     setActiveStep(step);
@@ -48,7 +50,10 @@ const Functiondetails = ({contract_type, bodyvalues, setbodyvalues}) => {
   useEffect(() => {
     getFunctiondetails(contract_type)
       .then((res) => {
+        if(res.data){
           setfunctionList(res.data.data)
+        }
+         
       })
   }, [contract_type])
 
@@ -60,24 +65,29 @@ const Functiondetails = ({contract_type, bodyvalues, setbodyvalues}) => {
   const getFunctionDetails = (function_name) => {
     getFunction(contract_type, function_name)
       .then((res) => {
+        if(res.data){
           setModifiers(res.data.data.modifiers)
           setRequires(res.data.data.requires)
           setEvents(res.data.data.events)
           let defaultselects = []
           res.data.data.body[0].map((item) => {
-            defaultselects.push(item[1])
+            defaultselects.push({value: item[1] , label: item[1]})
           })
           let newlist = []
           let deultvalues = []
           res.data.data.body[1].map((item, index) => {
-            newlist.push({value: item[0] , label: (item[0]+" : "+item[1])})
-            if(defaultselects.includes(item[0])){
-                deultvalues.push(newlist[index])
-            }
+            newlist.push({value: item[0] , label: item[0]})
+            // if(defaultselects.includes(item[0])){
+            //     deultvalues.push(newlist[index])
+            // }
           })
-          setDefaults(deultvalues)
+          console.log(defaultselects)
+          console.log(newlist)
+          setDefaults(defaultselects)
           setBody(newlist)
           setOverall(res.data.data)
+        }
+          
       })
     setActiveStep(1);
   }
