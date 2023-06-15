@@ -36,7 +36,8 @@ function ResponsiveAppBar() {
         <AppBar position="static">
         <Container maxWidth="xl">
             <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+            <img src="https://jade-witty-wolverine-528.mypinata.cloud/ipfs/QmUSypdWo8JRV44Ktk9KcXgiCk7us5WEYk3ZzeDzGEtDN3?pinataGatewayToken=xA9loW9mwlHFcUpNy4slXCUcWXNb-o8w5UN3T8pDiJRXLEh2zw4NoFeijQv9m5kK&_gl=1*1a7h9ba*rs_ga*MTAxNjE0NTAyLjE2ODYwNjg1NTc.*rs_ga_5RMPXG14TE*MTY4Njg1NzQ3Ni4xNC4xLjE2ODY4NTc1MDYuMzAuMC4w" alt="Arctix Logo" width="50" height="50" />
             <Typography
                 variant="h6"
                 noWrap
@@ -52,7 +53,7 @@ function ResponsiveAppBar() {
                 textDecoration: 'none',
                 }}
             >
-                Rentify
+                Arctix
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
