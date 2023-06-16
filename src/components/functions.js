@@ -150,8 +150,17 @@ const Functiondetails = ({contract_type, bodyvalues, setbodyvalues}) => {
   
   const handleChange = (selectedOptions) => {
       let bodyval = overall
-      bodyval.body[0] = selectedOptions
+      let newlist = []
+      console.log(selectedOptions)
+      console.log(bodyval)
+      selectedOptions.map((item,index) => {
+        console.log(item)
+        console.log(item.value)
+        newlist.push([index , item.value])
+      })
+      bodyval.body[0] = newlist
       setOverall(bodyval)
+      console.log(bodyval)
   }
 
   return (

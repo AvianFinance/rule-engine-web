@@ -399,7 +399,7 @@ const BuySell = () => {
                                     border: '2px solid black'
                                 }} 
                                 title = "Current Contract"
-                                src={lattestContratval ? lattestContratval.address : "https://jade-witty-wolverine-528.mypinata.cloud/ipfs/QmYQQEjJvKMHzDxzpM2yZ9em6R8oxGewpb3DREr9qwPnDt?pinataGatewayToken=xA9loW9mwlHFcUpNy4slXCUcWXNb-o8w5UN3T8pDiJRXLEh2zw4NoFeijQv9m5kK&_gl=1*u1cr9n*rs_ga*MTAxNjE0NTAyLjE2ODYwNjg1NTc.*rs_ga_5RMPXG14TE*MTY4Njg0OTM4MC4xMy4xLjE2ODY4NDk4ODAuMTMuMC4w"}>
+                                src={lattestContratval ? lattestContratval.address : "https://jade-witty-wolverine-528.mypinata.cloud/ipfs/QmVusbkKtt9ffo5ffNZVJ9LXgmVr2yQwaaSiBfYWeTB6bQ?pinataGatewayToken=xA9loW9mwlHFcUpNy4slXCUcWXNb-o8w5UN3T8pDiJRXLEh2zw4NoFeijQv9m5kK&_gl=1*1st7edk*rs_ga*MTAxNjE0NTAyLjE2ODYwNjg1NTc.*rs_ga_5RMPXG14TE*MTY4NjkwNjU1MS4xOC4wLjE2ODY5MDY1NTEuNjAuMC4w"}>
                             </iframe> 
                             {/* <p>hii</p> */}
                         </Grid>
