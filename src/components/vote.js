@@ -114,7 +114,7 @@ export default function VotingTable() {
         if(isConnected){
             try {
                 let _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-                    '0xf17339008A3D13B5E032Cd1FDf95069A02760E84',
+                    '0xB6d49064CcAb79B16777f812007Be30252A08fd2',
                     SellProxy.abi,
                     signer
                 );
@@ -179,7 +179,7 @@ export default function VotingTable() {
                     console.log("came to sell")
                     console.log("came to sell")
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-                        "0xf17339008A3D13B5E032Cd1FDf95069A02760E84",
+                        "0xB6d49064CcAb79B16777f812007Be30252A08fd2",
                         SellProxy.abi,
                         signer
                     );
@@ -247,7 +247,7 @@ export default function VotingTable() {
                 if(selected === "sell"){
                     console.log("came to sell")
                     _marketplace = await new ethers.Contract( // We will use this to interact with the AuctionManager
-                        "0xf17339008A3D13B5E032Cd1FDf95069A02760E84",
+                        "0xB6d49064CcAb79B16777f812007Be30252A08fd2",
                         SellProxy.abi,
                         signer
                     );
